@@ -6,7 +6,7 @@ module Language.ECMAScript3.Syntax.Arbitrary where
 
 import Language.ECMAScript3.Syntax
 import Test.QuickCheck (sized, Gen, vectorOf, choose)
-import Test.QuickCheck.Arbitrary
+import Test.QuickCheck.Arbitrary ()
 import Test.QuickCheck.Property (forAllShrink)
 import Data.Map hiding (map,null,filter,foldr,toList,singleton)
 import Data.List (nub,delete)
@@ -18,7 +18,7 @@ import Data.Generics.Str
 import Control.Monad
 import Control.Monad.State
 import Data.Maybe (maybeToList)
-import Test.Feat
+import Test.Feat (deriveEnumerable)
 import Test.Feat.Class
 import Test.Feat.Enumerate
 import Test.Feat.Modifiers
@@ -29,17 +29,16 @@ deriveEnumerable ''InfixOp
 deriveEnumerable ''UnaryAssignOp
 deriveEnumerable ''PrefixOp
 deriveEnumerable ''Id
+deriveEnumerable ''Prop
+deriveEnumerable ''Expression
+deriveEnumerable ''LValue
 deriveEnumerable ''CaseClause
 deriveEnumerable ''CatchClause
-deriveEnumerable ''Prop
-deriveEnumerable ''LValue
 deriveEnumerable ''ForInit
 deriveEnumerable ''ForInInit
 deriveEnumerable ''VarDecl
-deriveEnumerable ''Expression
 deriveEnumerable ''Statement
 deriveEnumerable ''JavaScript
-
 
 instance Arbitrary (AssignOp) where
   arbitrary = sized uniform
