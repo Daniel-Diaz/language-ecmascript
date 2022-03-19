@@ -43,6 +43,6 @@ quoteCommon p s = do loc <- TH.location
                                  eof
                                  return r
                      case parse p2 "" s of
-                       Left err -> do TH.report True $ show err
+                       Left err -> do TH.reportError $ show err
                                       return $ TH.UnboxedTupE []
                        Right x  -> dataToExpQ (const Nothing) x

@@ -34,9 +34,9 @@ import Language.ECMAScript3.Syntax.Annotations
 import Data.Default.Class
 import Text.Parsec hiding (parse)
 import Text.Parsec.Expr
-import Control.Monad(liftM,liftM2)
+import Control.Monad (liftM, liftM2)
 import Control.Monad.Trans (MonadIO,liftIO)
-import Numeric(readDec,readOct,readHex, readFloat)
+import Numeric (readDec, readOct, readHex, readFloat)
 import Data.Char
 import Control.Monad.Identity
 import Data.Maybe (isJust, isNothing, fromMaybe)
@@ -780,12 +780,12 @@ parseFromString = parse program ""
 -- | A convenience function that takes a filename and tries to parse
 -- the file contents an ECMAScript program, it fails with an error
 -- message if it can't.
-parseFromFile :: (Error e, MonadIO m, MonadError e m) => String -- ^ file name
+parseFromFile :: (MonadIO m, MonadFail m) => String -- ^ file name
                 -> m (JavaScript SourcePos)
 parseFromFile fname =
   liftIO (readFile fname) >>= \source ->
   case parse program fname source of
-    Left err -> throwError $ strMsg $ show err
+    Left err -> fail $ show err
     Right js -> return js
 
 -- | Read a JavaScript program from file an parse it into a list of
